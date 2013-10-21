@@ -1,0 +1,23 @@
+<RCC>
+  <qresource>
+    <file>images/icons/media-playback-stop.png</file>
+    <file>images/icons/application-exit.png</file>
+    <file>images/icons/applications-education-language.png</file>
+    <file>images/icons/applications-internet.png</file>
+    <file>images/icons/barq.png</file>
+    <file>images/icons/dialog-cancel.png</file>
+    <file>images/icons/dialog-ok-apply.png</file>
+    <file>images/icons/dialog-ok.png</file>
+    <file>images/icons/download.png</file>
+    <file>images/icons/help-about.png</file>
+    <file>images/icons/list-add.png</file>
+    <file>images/icons/list-remove.png</file>
+    <file>images/icons/media-playback-pause.png</file>
+    <file>images/icons/media-playback-start.png</file>
+    <file>images/icons/media-record.png</file>
+    <file>images/icons/media-seek-forward.png</file>
+    <file>images/icons/preferences-system.png</file>
+    <file>images/icons/project-development-new-template.png</file>
+    <file>images/icons/window-close.png</file>
+  </qresource>
+</RCC>
