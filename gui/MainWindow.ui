@@ -218,7 +218,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="cboxGlobalSpeed">
         <property name="currentIndex">
          <number>14</number>
         </property>
@@ -403,8 +403,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>:/images/images/icons/list-remove.png</normaloff>:/images/images/icons/list-remove.png</iconset>
+    <iconset resource="images.qrc">
+     <normaloff>:/images/icons/list-remove.png</normaloff>:/images/icons/list-remove.png</iconset>
    </property>
    <property name="text">
     <string>Remove</string>
@@ -497,6 +497,15 @@
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionDownloadLimit">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/icons/go-down.png</normaloff>:/images/icons/go-down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Download Limit</string>
    </property>
   </action>
  </widget>

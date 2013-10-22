@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# <one line to give the program's name and a brief idea of what it does.>
+# <A PySide Gui for Aria2 Download Manager>
 # Copyright (C) 2013  a.atalla <a.atalla@hacari.org>
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -34,11 +34,9 @@ class Aria2Manager:
 
 		self._PID = self.get_PID()
 		self.connection=rpc.ServerProxy('http://localhost:6800/rpc')
-		self.startAria2()
 		if self.isRunning():
-			print 'Aria2  was successfuly started at ',self._PID
-			print self.connection.aria2.getVersion()
-		
+			print 'Aria2  is Running with PID = ',self._PID
+			
 	def get_PID(self):
 		'''
 		return the system PID for 'aria2c'  process
@@ -98,17 +96,36 @@ class Aria2Manager:
 		allGids = [active,waiting,stopped]  # This is a list of 3 lists
 		return allGids
 	
-	
-	def overallDownloadLimit(self,speed):
+	def changeGlobalOption(self,options):
 		'''
-		--max-overall-download-limit=<SPEED>
-		Set max overall download speed in bytes/sec. 0 means unrestricted. 
-		You can append K or M (1K = 1024, 1M = 1024K). 
-		'''
-		self.connection.aria2.changeGlobalOption ({'max-overall-download-limit':speed})
+		option is of type dictionary for example: {'max-overall-download-limit':'20K'}
+		Avaliable globalOption in aria2:
 		
-	
-	
+		download-result
+		log
+		log-level
+		max-concurrent-downloads
+		max-download-result
+		max-overall-download-limit
+		max-overall-upload-limit
+		save-cookies
+		save-session
+		server-stat-of
+		'''
+		self.connection.aria2.changeGlobalOption(options)
+		
+	def changeOption(self,gid,options):
+		'''
+		available options to be changed
+		bt-max-peers
+		bt-request-peer-speed-limit
+		bt-remove-unselected-file
+		force-save
+		max-download-limit
+		max-upload-limit
+		'''
+		self.connection.aria2.changeOption(gid,options)
+
 	def  pauseAllDownloads(self):
 		self.connection.aria2.forcePauseAll()
 		

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# <one line to give the program's name and a brief idea of what it does.>
+# <A PySide Gui for Aria2 Download Manager>
 # Copyright (C) 2013  a.atalla <a.atalla@hacari.org>
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -21,14 +21,16 @@ from PySide.QtCore import Slot
 from PySide import QtGui,QtCore
 from gui.Ui_MainWindow import Ui_MainWindow
 from NewDownload import NewDownload
+from LimitDialog import LimitDialog
 from Aria2Manager import Aria2Manager
 
 class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
-	def __init__(self, parent=None):
-		QtGui.QMainWindow.__init__(self, parent)
+	def __init__(self):
+		QtGui.QMainWindow.__init__(self)
 		self.setupUi(self)
 		self.showMaximized()
 		self.aria = Aria2Manager()
+		self.aria.startAria2()
 		if self.aria.isRunning():
 			self.fillCategories()
 			self.timer = QtCore.QTimer(self)
@@ -45,7 +47,18 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.tblActive.setColumnWidth(3,150)
 		self.tblActive.setColumnWidth(4,150)
 		self.tblActive.setColumnWidth(5,100)
-        
+		
+		## The Right-click menu
+		self.menuRC = QtGui.QMenu()
+		self.menuRC.addAction(self.actionPause)
+		self.menuRC.addAction(self.actionStart)
+		self.menuRC.addAction(self.actionRemoveDownload)
+		self.menuRC.addAction(self.actionDownloadLimit)
+		self.tblActive.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+		self.connect(self.tblActive, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.showMenuRC)   
+		
+
+		
 	@Slot()
 	def on_actionQuit_triggered(self):
 		self.close()
@@ -57,7 +70,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	
 	@Slot()
 	def on_actionStart_triggered(self):
-		self.aria.unpauseSingleDownload(self.getGid())
+		self.aria.unpauseSingleDownload(self.selectedGid())
 
 	@Slot()
 	def on_actionStartAll_triggered(self):
@@ -65,7 +78,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
 	@Slot()
 	def on_actionPause_triggered(self):
-		self.aria.pauseSingleDownload(self.getGid())
+		self.aria.pauseSingleDownload(self.selectedGid())
 		
 	@Slot()
 	def on_actionPauseAll_triggered(self):
@@ -74,9 +87,21 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	@Slot()
 	def on_lwCategories_itemClicked(self):
 		print self.lwCategories.currentItem().text()
-        
+	
+	@Slot()
+	def on_cboxGlobalSpeed_currentIndexChanged(self):
+		speed = self.cboxGlobalSpeed.currentText().split()[0]
+		if speed=='Unlimited':
+			speed = '0'
+		self.aria.changeGlobalOption({'max-overall-download-limit':speed+'K'})
+		
 	def closeEvent(self,event):
 		self.aria.stopAria2()
+		
+	@Slot()
+	def on_actionDownloadLimit_triggered(self):
+		limitDlg = LimitDialog(self.selectedGid())
+		limitDlg.exec_()
 	
 	def trayIcon(self):
 		self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq.png'))
@@ -151,7 +176,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			self.tblActive.setItem(i,5,QtGui.QTableWidgetItem(speed))
 			self.tblActive.setItem(i,6,QtGui.QTableWidgetItem(str(remainingTime)+timeFormat))
 
-	def getGid(self):
+	def selectedGid(self):
 		selectedRow =  self.tblActive.selectionModel().currentIndex().row()
 		gid =str(self.tblActive.item(selectedRow,0).text())
 		return gid
@@ -166,3 +191,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.lwCategories.item(0).setText('Active Downloads ('+global_status['numActive']+')')
 		self.lwCategories.item(1).setText('Waiting Downloads ('+global_status['numWaiting']+')')
 		self.lwCategories.item(2).setText('Stopped Downloads ('+global_status['numStopped']+')')
+		
+	def showMenuRC(self):  
+		'''
+		Show menu when right-click a download
+		'''
+		self.menuRC.exec_(QtGui.QCursor.pos()) 

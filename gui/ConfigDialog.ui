@@ -19,7 +19,7 @@
    <string>Preferences</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images.qrc">
+   <iconset>
     <normaloff>:/images/preferences-system.png</normaloff>:/images/preferences-system.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -51,7 +51,7 @@ QToolButton:pressed {padding-top: 5px;}
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../images.qrc">
+            <iconset>
              <normaloff>:/images/applications-education-language.png</normaloff>:/images/applications-education-language.png</iconset>
            </property>
            <property name="iconSize">
@@ -75,7 +75,7 @@ QToolButton:pressed {padding-top: 5px;}
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../images.qrc">
+            <iconset>
              <normaloff>:/images/applixware.png</normaloff>:/images/applixware.png</iconset>
            </property>
            <property name="iconSize">
@@ -292,7 +292,7 @@ QToolButton:pressed {padding-top: 5px;}
         <string>OK</string>
        </property>
        <property name="icon">
-        <iconset resource="../images.qrc">
+        <iconset>
          <normaloff>:/images/dialog-ok.png</normaloff>:/images/dialog-ok.png</iconset>
        </property>
       </widget>
@@ -303,7 +303,7 @@ QToolButton:pressed {padding-top: 5px;}
         <string>Cancel</string>
        </property>
        <property name="icon">
-        <iconset resource="../images.qrc">
+        <iconset>
          <normaloff>:/images/dialog-cancel.png</normaloff>:/images/dialog-cancel.png</iconset>
        </property>
       </widget>
@@ -313,7 +313,7 @@ QToolButton:pressed {padding-top: 5px;}
   </layout>
  </widget>
  <resources>
-  <include location="../images.qrc"/>
+  <include location="images.qrc"/>
  </resources>
  <connections>
   <connection>

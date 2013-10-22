@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-#
+# -*- coding: utf-8 -*-#
 # <A PySide Gui for Aria2 Download Manager>
-# Copyright (C) 2013  a.atalla <a.atalla@hacari.org>
+# Copyright (C) 2013  a.atalla <email>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,36 +16,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 #
-from PySide.QtCore import Slot
-from PySide import QtGui,QtCore
-from gui.Ui_NewDownloadDialog import Ui_NewDownloadDialog
-
 from Aria2Manager import Aria2Manager
+from PySide import QtGui,QtCore
+from PySide.QtCore import Slot
+from gui.Ui_LimitDialog import Ui_LimitDialog
 
-class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
-	def __init__(self):
+class LimitDialog(QtGui.QDialog,Ui_LimitDialog):
+	def __init__(self,gid):
 		QtGui.QDialog.__init__(self)
 		self.setupUi(self)
-		
+		self.gid = gid
 		self.aria = Aria2Manager()
-	@Slot()
-	def on_btnDir_clicked(self):
-		dialog = QtGui.QFileDialog(self)
-		dirName = dialog.getExistingDirectory(self,"Select Download Directory")
-		self.edtDir.setText(dirName)
-        
-	@Slot()
-	def on_btnOk_clicked(self):
-		speed= str(self.spinSpeed.value())+'K'
-		connections = str(self.spinConnections.value())
-		dir = str(self.edtDir.text())
-		print type(speed),speed
-		print type(connections),connections
-		uris = [self.edtUrl.text()]
-		params = {'dir':dir,'max-download-limit':speed,'max-connection-per-server':connections}
-		self.aria.addUris(uris,params)
-		self.close()
-			
+
 	@Slot()
 	def on_btnCancel_clicked(self):
 		self.close()
+	@Slot()
+	def on_btnOk_clicked(self):
+		speed = str(self.spinLimit.value())+'K'
+		self.aria.changeOption(self.gid,{'max-download-limit':speed})
+		self.close()
+		
+	@Slot()
+	def on_slidLimit_valueChanged(self):
+		self.spinLimit.setValue(self.slidLimit.value())
+		
+	@Slot()
+	def on_spinLimit_valueChanged(self):
+		self.slidLimit.setValue(self.spinLimit.value())

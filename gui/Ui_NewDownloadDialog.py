@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/NewDownloadDialog.ui'
 #
-# Created: Tue Oct 22 05:06:09 2013
+# Created: Tue Oct 22 07:47:28 2013
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!

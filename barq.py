@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# <one line to give the program's name and a brief idea of what it does.>
+# <A PySide Gui for Aria2 Download Manager>
 # Copyright (C) 2013  a.atalla <a.atalla@hacari.org>
 # 
 # This program is free software: you can redistribute it and/or modify
