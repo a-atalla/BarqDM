@@ -56,7 +56,7 @@ class Aria2Manager:
 		
 
 	def startAria2(self):
-		args = ['aria2c','-D','--enable-rpc']
+		args = ['aria2c','-D','--enable-rpc','--continue=true']
 		if os.path.exists(CONFIG_DIR+'/session.ini'):
 			print CONFIG_DIR,'is exist'
 			args.append('--input-file='+CONFIG_DIR+'/session.ini')
@@ -65,6 +65,7 @@ class Aria2Manager:
 				print 'create config folder'
 				os.mkdir(CONFIG_DIR)
 		args.append('--save-session='+CONFIG_DIR+'/session.ini')
+		args.append('--save-session-interval=30')
 		print (args)
 		subprocess.call(args)
 		self._PID = self.get_PID()

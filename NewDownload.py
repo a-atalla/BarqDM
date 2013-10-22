@@ -32,6 +32,13 @@ class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 		#self.edtUrl.setText('http://cdimage.ubuntu.com/kubuntu/releases/13.10/release/kubuntu-13.10-desktop-amd64.iso')
 		#self.edtDir.setText('/media/Data/Iso')
 
+
+	@Slot()
+	def on_btnDir_clicked(self):
+		dialog = QtGui.QFileDialog(self)
+		dirName = dialog.getExistingDirectory(self,"Select Download Directory")
+		self.edtDir.setText(dirName)
+        
 	@Slot()
 	def on_btnOk_clicked(self):
 		speed= str(self.spinSpeed.value())+'K'

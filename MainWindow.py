@@ -37,7 +37,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		else:
 			self.setWindowTitle('Barq Download Manager (Offline)')
 		
-				
+		self.trayIcon()	
 		##Setting the columns sizes
 		self.tblActive.setColumnWidth(0,150)
 		self.tblActive.setColumnWidth(1,300)
@@ -45,11 +45,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.tblActive.setColumnWidth(3,150)
 		self.tblActive.setColumnWidth(4,150)
 		self.tblActive.setColumnWidth(5,100)
-
-		## Test section
-		
-		
-		
+        
 	@Slot()
 	def on_actionQuit_triggered(self):
 		self.close()
@@ -78,10 +74,27 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	@Slot()
 	def on_lwCategories_itemClicked(self):
 		print self.lwCategories.currentItem().text()
-	
+        
 	def closeEvent(self,event):
 		self.aria.stopAria2()
-		
+	
+	def trayIcon(self):
+		self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq.png'))
+		self.trayicon.show()
+		self.menu=QtGui.QMenu()
+		self.menu.addAction(self.actionPauseAll)
+		self.menu.addAction(self.actionStartAll)
+		self.menu.addAction(self.actionQuit)
+		self.trayicon.setContextMenu(self.menu)
+		self.trayicon.activated.connect(self.onTrayIconActivated)
+	
+	def onTrayIconActivated(self, reason):
+		if reason == QtGui.QSystemTrayIcon.DoubleClick:
+			if self.isVisible():
+				self.hide()
+			else:
+				self.show()  
+
 	def fillCategories(self):
 		global_status = self.aria.getGlobalStatus()
 		self.lwCategories.clear()
