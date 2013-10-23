@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/MainWindow.ui'
 #
-# Created: Tue Oct 22 07:47:28 2013
+# Created: Wed Oct 23 05:25:19 2013
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -43,8 +43,8 @@ class Ui_MainWindow(object):
         self.tblActive.setDragDropOverwriteMode(False)
         self.tblActive.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.tblActive.setTextElideMode(QtCore.Qt.ElideMiddle)
-        self.tblActive.setShowGrid(True)
-        self.tblActive.setGridStyle(QtCore.Qt.SolidLine)
+        self.tblActive.setShowGrid(False)
+        self.tblActive.setGridStyle(QtCore.Qt.NoPen)
         self.tblActive.setColumnCount(7)
         self.tblActive.setObjectName("tblActive")
         self.tblActive.setColumnCount(7)
@@ -197,6 +197,11 @@ class Ui_MainWindow(object):
         icon10.addPixmap(QtGui.QPixmap(":/images/icons/go-down.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionDownloadLimit.setIcon(icon10)
         self.actionDownloadLimit.setObjectName("actionDownloadLimit")
+        self.actionCleanList = QtGui.QAction(MainWindow)
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap(":/images/icons/edit-clear.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionCleanList.setIcon(icon11)
+        self.actionCleanList.setObjectName("actionCleanList")
         self.menuFile.addAction(self.actionNewDownload)
         self.menuFile.addAction(self.actionRemoveDownload)
         self.menuFile.addAction(self.actionQuit)
@@ -204,6 +209,8 @@ class Ui_MainWindow(object):
         self.menuDownload.addAction(self.actionStartAll)
         self.menuDownload.addAction(self.actionPause)
         self.menuDownload.addAction(self.actionPauseAll)
+        self.menuDownload.addSeparator()
+        self.menuDownload.addAction(self.actionCleanList)
         self.menuSettings.addAction(self.actionPreference)
         self.menu_Help.addAction(self.actionAbout_aria2)
         self.menu_Help.addAction(self.actionAbout_Qt)
@@ -217,6 +224,8 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionPause)
         self.toolBar.addAction(self.actionStartAll)
         self.toolBar.addAction(self.actionPauseAll)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionCleanList)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionPreference)
         self.toolBar.addSeparator()
@@ -276,5 +285,7 @@ class Ui_MainWindow(object):
         self.actionAbout_aria2.setText(QtGui.QApplication.translate("MainWindow", "About aria2", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout_Qt.setText(QtGui.QApplication.translate("MainWindow", "About Qt", None, QtGui.QApplication.UnicodeUTF8))
         self.actionDownloadLimit.setText(QtGui.QApplication.translate("MainWindow", "Download Limit", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCleanList.setText(QtGui.QApplication.translate("MainWindow", "Clean List", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCleanList.setToolTip(QtGui.QApplication.translate("MainWindow", "<html><head/><body><p>remove all downloads with status (complete , error , removed)</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 
 import images_rc

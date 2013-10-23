@@ -71,10 +71,10 @@
          <enum>Qt::ElideMiddle</enum>
         </property>
         <property name="showGrid">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
+         <enum>Qt::NoPen</enum>
         </property>
         <property name="columnCount">
          <number>7</number>
@@ -328,6 +328,8 @@
     <addaction name="actionStartAll"/>
     <addaction name="actionPause"/>
     <addaction name="actionPauseAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionCleanList"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -381,6 +383,8 @@
    <addaction name="actionPause"/>
    <addaction name="actionStartAll"/>
    <addaction name="actionPauseAll"/>
+   <addaction name="separator"/>
+   <addaction name="actionCleanList"/>
    <addaction name="separator"/>
    <addaction name="actionPreference"/>
    <addaction name="separator"/>
@@ -506,6 +510,18 @@
    </property>
    <property name="text">
     <string>Download Limit</string>
+   </property>
+  </action>
+  <action name="actionCleanList">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/icons/edit-clear.png</normaloff>:/images/icons/edit-clear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clean List</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;remove all downloads with status (complete , error , removed)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>

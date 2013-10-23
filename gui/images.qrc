@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>images/icons/edit-clear.png</file>
     <file>images/icons/go-down.png</file>
     <file>images/icons/media-playback-stop.png</file>
     <file>images/icons/application-exit.png</file>

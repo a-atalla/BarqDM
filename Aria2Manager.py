@@ -95,7 +95,9 @@ class Aria2Manager:
 		stopped = self.connection.aria2.tellStopped(0,100,['gid'])
 		allGids = [active,waiting,stopped]  # This is a list of 3 lists
 		return allGids
-	
+	def getOptions(self,gid):
+		return self.connection.aria2.getOption(gid)
+		
 	def changeGlobalOption(self,options):
 		'''
 		option is of type dictionary for example: {'max-overall-download-limit':'20K'}
@@ -140,6 +142,9 @@ class Aria2Manager:
 		
 	def removeSingleDownload(self,gid):
 		self.connection.aria2.remove(gid)
+		
+	def cleanDownloadList(self):
+		self.connection.aria2.purgeDownloadResult()
 		
 	def getDownloadStatus(self,gid):
 		data = self.connection.aria2.tellStatus(gid)

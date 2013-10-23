@@ -28,6 +28,8 @@ class LimitDialog(QtGui.QDialog,Ui_LimitDialog):
 		self.gid = gid
 		self.aria = Aria2Manager()
 
+		self.slidLimit.setValue( int(self.aria.getOptions(self.gid).get('max-download-limit'))/1000)
+
 	@Slot()
 	def on_btnCancel_clicked(self):
 		self.close()

@@ -102,6 +102,22 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	def on_actionDownloadLimit_triggered(self):
 		limitDlg = LimitDialog(self.selectedGid())
 		limitDlg.exec_()
+		
+	@Slot()
+	def on_actionRemoveDownload_triggered(self):
+		msgBox = QtGui.QMessageBox()
+		msgBox.setText('Remove Download!')
+		msgBox.setInformativeText('Are You Sure ?')
+		msgBox.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.No)
+		msgBox.setDefaultButton(QtGui.QMessageBox.Save)
+		ret = msgBox.exec_()
+		if ret==QtGui.QMessageBox.Yes:
+			self.aria.removeSingleDownload(self.selectedGid())
+			self.tblActive.removeRow(self.tblActive.selectionModel().currentIndex().row())
+		
+	@Slot()
+	def on_actionCleanList_triggered(self):
+		self.aria.cleanDownloadList()
 	
 	def trayIcon(self):
 		self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq.png'))
@@ -135,6 +151,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		waitingList = self.aria.getAllGids()[1]
 		stoppedList = self.aria.getAllGids()[2]
 		allList = activeList+waitingList+stoppedList
+		if self.tblActive.rowCount() > len(allList):
+			self.tblActive.clearContents()
+			self.tblActive.setRowCount(self.tblActive.rowCount()-1)
 		for active in allList:
 			i=allList.index(active)
 			gid = active.get('gid')
@@ -163,6 +182,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 				
 			if self.tblActive.rowCount() < len(allList):
 				self.tblActive.setRowCount(self.tblActive.rowCount()+1)
+
 				
 			pbar = QtGui.QProgressBar()
 			pbar.setRange(0,100) # The range is from 0  to Size
@@ -175,6 +195,16 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			self.tblActive.setCellWidget(i,4,pbar)
 			self.tblActive.setItem(i,5,QtGui.QTableWidgetItem(speed))
 			self.tblActive.setItem(i,6,QtGui.QTableWidgetItem(str(remainingTime)+timeFormat))
+			self.tblActive.setRowHeight(i,20)
+			for j in range(0,7):
+				if j==4:
+					pass
+				else:
+					self.tblActive.item(i,j).setTextAlignment(QtCore.Qt.AlignCenter)
+					if data[2]=='error' or data[2]=='removed' :
+						self.tblActive.item(i,j).setBackground(QtCore.Qt.red)
+					elif data[2]=='complete':
+						self.tblActive.item(i,j).setBackground(QtCore.Qt.green)
 
 	def selectedGid(self):
 		selectedRow =  self.tblActive.selectionModel().currentIndex().row()
