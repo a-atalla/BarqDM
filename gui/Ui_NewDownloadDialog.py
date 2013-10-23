@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/NewDownloadDialog.ui'
 #
-# Created: Wed Oct 23 05:25:19 2013
+# Created: Wed Oct 23 11:54:18 2013
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,24 +30,24 @@ class Ui_NewDownloadDialog(object):
         self.edtUrl = QtGui.QLineEdit(self.groupBox)
         self.edtUrl.setObjectName("edtUrl")
         self.verticalLayout.addWidget(self.edtUrl)
-        self.listWidget = QtGui.QListWidget(self.groupBox)
-        self.listWidget.setObjectName("listWidget")
-        self.verticalLayout.addWidget(self.listWidget)
+        self.listUrls = QtGui.QListWidget(self.groupBox)
+        self.listUrls.setObjectName("listUrls")
+        self.verticalLayout.addWidget(self.listUrls)
         self.horizontalLayout_5.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtGui.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.toolButton = QtGui.QToolButton(self.groupBox)
+        self.btnAdd = QtGui.QToolButton(self.groupBox)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/images/icons/list-add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButton.setIcon(icon1)
-        self.toolButton.setObjectName("toolButton")
-        self.verticalLayout_2.addWidget(self.toolButton)
-        self.toolButton_2 = QtGui.QToolButton(self.groupBox)
+        self.btnAdd.setIcon(icon1)
+        self.btnAdd.setObjectName("btnAdd")
+        self.verticalLayout_2.addWidget(self.btnAdd)
+        self.btnRemove = QtGui.QToolButton(self.groupBox)
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/images/icons/list-remove.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButton_2.setIcon(icon2)
-        self.toolButton_2.setObjectName("toolButton_2")
-        self.verticalLayout_2.addWidget(self.toolButton_2)
+        self.btnRemove.setIcon(icon2)
+        self.btnRemove.setObjectName("btnRemove")
+        self.verticalLayout_2.addWidget(self.btnRemove)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
         self.horizontalLayout_5.addLayout(self.verticalLayout_2)
@@ -123,8 +123,8 @@ class Ui_NewDownloadDialog(object):
     def retranslateUi(self, NewDownloadDialog):
         NewDownloadDialog.setWindowTitle(QtGui.QApplication.translate("NewDownloadDialog", "Add URL", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("NewDownloadDialog", "Add Uris", None, QtGui.QApplication.UnicodeUTF8))
-        self.toolButton.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.toolButton_2.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnAdd.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnRemove.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("NewDownloadDialog", "Download Options", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("NewDownloadDialog", "Download Directory", None, QtGui.QApplication.UnicodeUTF8))
         self.btnDir.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
