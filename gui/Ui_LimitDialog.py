@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'gui/LimitDialog.ui'
 #
-# Created: Wed Oct 23 11:54:18 2013
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Tue Oct 29 02:06:49 2013
+#      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
 

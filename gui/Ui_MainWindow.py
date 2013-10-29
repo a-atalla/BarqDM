@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'gui/MainWindow.ui'
 #
-# Created: Wed Oct 23 11:54:18 2013
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Tue Oct 29 02:06:49 2013
+#      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -16,6 +16,7 @@ class Ui_MainWindow(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/images/icons/barq.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
+        MainWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
@@ -74,22 +75,26 @@ class Ui_MainWindow(object):
         self.frame.setObjectName("frame")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.frame)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.tabWidget = QtGui.QTabWidget(self.frame)
-        self.tabWidget.setObjectName("tabWidget")
+        self.btmTab = QtGui.QTabWidget(self.frame)
+        self.btmTab.setObjectName("btmTab")
         self.tab = QtGui.QWidget()
         self.tab.setObjectName("tab")
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.tab)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.tableWidget = QtGui.QTableWidget(self.tab)
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
-        self.verticalLayout_2.addWidget(self.tableWidget)
-        self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QtGui.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.tabWidget.addTab(self.tab_2, "")
-        self.horizontalLayout_2.addWidget(self.tabWidget)
+        self.tblUris = QtGui.QTableWidget(self.tab)
+        self.tblUris.setAlternatingRowColors(True)
+        self.tblUris.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tblUris.setGridStyle(QtCore.Qt.DotLine)
+        self.tblUris.setObjectName("tblUris")
+        self.tblUris.setColumnCount(2)
+        self.tblUris.setRowCount(0)
+        item = QtGui.QTableWidgetItem()
+        self.tblUris.setHorizontalHeaderItem(0, item)
+        item = QtGui.QTableWidgetItem()
+        self.tblUris.setHorizontalHeaderItem(1, item)
+        self.verticalLayout_2.addWidget(self.tblUris)
+        self.btmTab.addTab(self.tab, "")
+        self.horizontalLayout_2.addWidget(self.btmTab)
         self.verticalLayout.addWidget(self.splitter_2)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -123,7 +128,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 818, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 818, 22))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -232,7 +237,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionQuit)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.btmTab.setCurrentIndex(0)
         self.cboxGlobalSpeed.setCurrentIndex(14)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -245,8 +250,9 @@ class Ui_MainWindow(object):
         self.tblActive.horizontalHeaderItem(4).setText(QtGui.QApplication.translate("MainWindow", "Progress", None, QtGui.QApplication.UnicodeUTF8))
         self.tblActive.horizontalHeaderItem(5).setText(QtGui.QApplication.translate("MainWindow", "Speed", None, QtGui.QApplication.UnicodeUTF8))
         self.tblActive.horizontalHeaderItem(6).setText(QtGui.QApplication.translate("MainWindow", "Time Left", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("MainWindow", "Tab 1", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("MainWindow", "Tab 2", None, QtGui.QApplication.UnicodeUTF8))
+        self.tblUris.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "Uris", None, QtGui.QApplication.UnicodeUTF8))
+        self.tblUris.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "Status", None, QtGui.QApplication.UnicodeUTF8))
+        self.btmTab.setTabText(self.btmTab.indexOf(self.tab), QtGui.QApplication.translate("MainWindow", "Uris", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Global Download Limit", None, QtGui.QApplication.UnicodeUTF8))
         self.cboxGlobalSpeed.setItemText(0, QtGui.QApplication.translate("MainWindow", "5          Kb/Sec", None, QtGui.QApplication.UnicodeUTF8))
         self.cboxGlobalSpeed.setItemText(1, QtGui.QApplication.translate("MainWindow", "10        Kb/Sec", None, QtGui.QApplication.UnicodeUTF8))

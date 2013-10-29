@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'gui/NewDownloadDialog.ui'
 #
-# Created: Wed Oct 23 11:54:18 2013
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Tue Oct 29 02:06:49 2013
+#      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -123,6 +123,7 @@ class Ui_NewDownloadDialog(object):
     def retranslateUi(self, NewDownloadDialog):
         NewDownloadDialog.setWindowTitle(QtGui.QApplication.translate("NewDownloadDialog", "Add URL", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("NewDownloadDialog", "Add Uris", None, QtGui.QApplication.UnicodeUTF8))
+        self.listUrls.setToolTip(QtGui.QApplication.translate("NewDownloadDialog", "<html><head/><body><p>All URLs should point to the same file</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.btnAdd.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.btnRemove.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("NewDownloadDialog", "Download Options", None, QtGui.QApplication.UnicodeUTF8))

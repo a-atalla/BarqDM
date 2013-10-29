@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-#
 
 import os
 import psutil
@@ -155,3 +154,9 @@ class Aria2Manager:
 		dsize = data.get('completedLength')   #The Completed Size
 		speed = data.get('downloadSpeed')
 		return [gid,filename,status,size,dsize,speed]
+	  
+	def getUrisDetails(self,gid):
+		status  = self.connection.aria2.tellStatus(gid)
+		p.pprint (status)
+		return status.get('files')[0].get('uris')
+	  

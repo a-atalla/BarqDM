@@ -40,15 +40,14 @@ class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 		speed= str(self.spinSpeed.value())+'K'
 		connections = str(self.spinConnections.value())
 		dir = str(self.edtDir.text())
+		
 		uris = []
-		for i in range(0,self.listUrls.count()):
-			uris.append(self.listUrls.item(i).text())
-		if not uris.count()==0:	
-			params = {'dir':dir,'max-download-limit':speed,'max-connection-per-server':connections}
-			self.aria.addUris(uris,params)
-			self.close()
-		else:
-			pass
+		if self.edtUrl.text()=='':
+		  for i in range(0,self.listUrls.count()):
+			  uris.append(self.listUrls.item(i).text())
+		params = {'dir':dir,'max-download-limit':speed,'split':connections}
+		self.aria.addUris(uris,params)
+		self.close()
 			
 	@Slot()
 	def on_btnCancel_clicked(self):

@@ -23,6 +23,7 @@ from gui.Ui_MainWindow import Ui_MainWindow
 from NewDownload import NewDownload
 from LimitDialog import LimitDialog
 from Aria2Manager import Aria2Manager
+import pprint as p
 
 class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	def __init__(self):
@@ -47,6 +48,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.tblActive.setColumnWidth(3,150)
 		self.tblActive.setColumnWidth(4,150)
 		self.tblActive.setColumnWidth(5,100)
+		
+		self.tblUris.setColumnWidth(0,800)
+		self.tblUris.setColumnWidth(1,150)
 		
 		## The Right-click menu
 		self.menuRC = QtGui.QMenu()
@@ -94,9 +98,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		if speed=='Unlimited':
 			speed = '0'
 		self.aria.changeGlobalOption({'max-overall-download-limit':speed+'K'})
-		
-	def closeEvent(self,event):
-		self.aria.stopAria2()
+
 		
 	@Slot()
 	def on_actionDownloadLimit_triggered(self):
@@ -119,6 +121,15 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	def on_actionCleanList_triggered(self):
 		self.aria.cleanDownloadList()
 	
+	@Slot()
+	def on_tblActive_itemSelectionChanged(self):	
+		self.urisTimer = QtCore.QTimer(self)
+		self.urisTimer.start(2000)
+		self.connect(self.urisTimer,QtCore.SIGNAL("timeout()"), self.viewUris)
+		
+	def closeEvent(self,event):
+		self.aria.stopAria2()
+		
 	def trayIcon(self):
 		self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq.png'))
 		self.trayicon.show()
@@ -187,7 +198,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			pbar = QtGui.QProgressBar()
 			pbar.setRange(0,100) # The range is from 0  to Size
 			pbar.setValue(progress)			# The value is the dsize which is completedLength
-
 			self.tblActive.setItem(i,0,QtGui.QTableWidgetItem(data[0]))
 			self.tblActive.setItem(i,1,QtGui.QTableWidgetItem(data[1]))
 			self.tblActive.setItem(i,2,QtGui.QTableWidgetItem(data[2]))
@@ -195,11 +205,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			self.tblActive.setCellWidget(i,4,pbar)
 			self.tblActive.setItem(i,5,QtGui.QTableWidgetItem(speed))
 			self.tblActive.setItem(i,6,QtGui.QTableWidgetItem(str(remainingTime)+timeFormat))
-			self.tblActive.setRowHeight(i,20)
+			self.tblActive.setRowHeight(i,22)
 			for j in range(0,7):
-				if j==4:
-					pass
-				else:
+				if not j==4:
 					self.tblActive.item(i,j).setTextAlignment(QtCore.Qt.AlignCenter)
 					if data[2]=='error' or data[2]=='removed' :
 						self.tblActive.item(i,j).setBackground(QtCore.Qt.red)
@@ -210,7 +218,20 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		selectedRow =  self.tblActive.selectionModel().currentIndex().row()
 		gid =str(self.tblActive.item(selectedRow,0).text())
 		return gid
-		
+	
+	def viewUris(self):
+		self.btmTab.setTabText(0,self.tblActive.item(self.tblActive.currentRow(),1).text())
+
+		uris = self.aria.getUrisDetails(self.selectedGid())
+		if self.tblUris.rowCount()<len(uris):
+			self.tblUris.setRowCount(len(uris))
+			self.tblUris.clearContents()
+		i=0
+		for i in range(0,len(uris)):
+			self.tblUris.setItem(i,0,QtGui.QTableWidgetItem(uris[i]['uri']))
+			self.tblUris.setItem(i,1,QtGui.QTableWidgetItem(uris[i]['status']))
+			self.tblUris.setRowHeight(i,25)
+			
 	def refreshView(self):
 		'''
 		This piece of code will be executed each 2 seconds to refresh the 

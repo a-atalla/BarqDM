@@ -34,7 +34,11 @@
           <widget class="QLineEdit" name="edtUrl"/>
          </item>
          <item>
-          <widget class="QListWidget" name="listUrls"/>
+          <widget class="QListWidget" name="listUrls">
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;All URLs should point to the same file&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
