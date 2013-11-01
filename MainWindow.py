@@ -30,6 +30,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		QtGui.QMainWindow.__init__(self)
 		self.setupUi(self)
 		self.showMaximized()
+		self._isQuit = False
 		self.aria = Aria2Manager()
 		self.aria.startAria2()
 		if self.aria.isRunning():
@@ -60,12 +61,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.menuRC.addAction(self.actionDownloadLimit)
 		self.tblActive.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
 		self.connect(self.tblActive, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.showMenuRC)   
-		
-
-		
-	@Slot()
-	def on_actionQuit_triggered(self):
-		self.close()
 		
 	@Slot()
 	def on_actionNewDownload_triggered(self):
@@ -122,13 +117,27 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.aria.cleanDownloadList()
 	
 	@Slot()
-	def on_tblActive_itemSelectionChanged(self):	
+	def on_tblActive_itemSelectionChanged(self):
+		self.tblUris.clearContents()
+		self.tblUris.setRowCount(0)
 		self.urisTimer = QtCore.QTimer(self)
 		self.urisTimer.start(2000)
 		self.connect(self.urisTimer,QtCore.SIGNAL("timeout()"), self.viewUris)
+	
+	@Slot()
+	def on_actionQuit_triggered(self):
+		self._isQuit = True
+		self.closeEvent(QtGui.QCloseEvent)
 		
 	def closeEvent(self,event):
-		self.aria.stopAria2()
+		if not self._isQuit:
+			event.ignore()
+			if self.isVisible():
+				self.hide()
+				self.trayicon.showMessage(self.tr('Barq Download Manager is still running'),self.tr(''))
+		else:
+			self.aria.stopAria2()
+			self.close()
 		
 	def trayIcon(self):
 		self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq.png'))
@@ -156,6 +165,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		item.setIcon(QtGui.QIcon(':images/icons/media-playback-pause.png'))
 		item = QtGui.QListWidgetItem('Stopped Downloads ('+global_status['numStopped']+')',self.lwCategories)
 		item.setIcon(QtGui.QIcon(':images/icons/media-playback-stop.png'))
+		
+		
+		
 	
 	def viewActive(self):
 		activeList  = self.aria.getAllGids()[0]
@@ -170,7 +182,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			gid = active.get('gid')
 			data =  self.aria.getDownloadStatus(gid)
 			# [gid,filename,status,size,dsize,speed]
-			size= str(round(float(data[3])/1000000,2))+' Mb'
+			size= str(round(float(data[3])/1000000,2))+' MB'
 			speed  = str(round(float(data[5])/1000,2))+' Kb/sec'
 			try:
 				progress = round(float(data[4])*100/float(data[3]),2)
@@ -180,13 +192,13 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			try: # To avoid dividing by zero until connect to the server
 				RemainingTime = (float(data[3])-float(data[4]))/float(data[5])
 				remainingTime = round (RemainingTime/(3600),2) #Hour Format
-				timeFormat = '  Hr'
+				timeFormat = '  H'
 				if remainingTime < 1 :
 					remainingTime = round (RemainingTime/(60),2) #Min Format
-					timeFormat = '  Min'
+					timeFormat = '  M'
 					if remainingTime < 1 :
 						remainingTime = round (RemainingTime,2) #Sec Format
-						timeFormat = '  Sec'
+						timeFormat = '  S'
 			except:
 				remainingTime = ''
 				timeFormat=''
@@ -197,7 +209,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 				
 			pbar = QtGui.QProgressBar()
 			pbar.setRange(0,100) # The range is from 0  to Size
-			pbar.setValue(progress)			# The value is the dsize which is completedLength
+			pbar.setValue(progress)			#The value is the dsize which is completedLength
 			self.tblActive.setItem(i,0,QtGui.QTableWidgetItem(data[0]))
 			self.tblActive.setItem(i,1,QtGui.QTableWidgetItem(data[1]))
 			self.tblActive.setItem(i,2,QtGui.QTableWidgetItem(data[2]))
@@ -205,7 +217,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			self.tblActive.setCellWidget(i,4,pbar)
 			self.tblActive.setItem(i,5,QtGui.QTableWidgetItem(speed))
 			self.tblActive.setItem(i,6,QtGui.QTableWidgetItem(str(remainingTime)+timeFormat))
-			self.tblActive.setRowHeight(i,22)
+			self.tblActive.setRowHeight(i,20)
 			for j in range(0,7):
 				if not j==4:
 					self.tblActive.item(i,j).setTextAlignment(QtCore.Qt.AlignCenter)

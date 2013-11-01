@@ -17,18 +17,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 #
+
+import os
+import sys
 from PySide.QtCore import Slot
 from PySide import QtGui,QtCore
 from gui.Ui_NewDownloadDialog import Ui_NewDownloadDialog
 
 from Aria2Manager import Aria2Manager
 
+
+HOME_DIR = os.environ['HOME']
+
 class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 	def __init__(self):
 		QtGui.QDialog.__init__(self)
 		self.setupUi(self)
-		
 		self.aria = Aria2Manager()
+		
 	@Slot()
 	def on_btnDir_clicked(self):
 		dialog = QtGui.QFileDialog(self)
@@ -38,16 +44,30 @@ class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 	@Slot()
 	def on_btnOk_clicked(self):
 		speed= str(self.spinSpeed.value())+'K'
-		connections = str(self.spinConnections.value())
+		pieces = str(self.spinPieces.value())
+		maxconnectionperserver = str(self.spinConnectionsPerServer.value())
 		dir = str(self.edtDir.text())
 		
 		uris = []
-		if self.edtUrl.text()=='':
-		  for i in range(0,self.listUrls.count()):
-			  uris.append(self.listUrls.item(i).text())
-		params = {'dir':dir,'max-download-limit':speed,'split':connections}
-		self.aria.addUris(uris,params)
-		self.close()
+		for i in range(0,self.listUrls.count()):
+			url = self.listUrls.item(i).text()
+			if url.startswith('http') or url.startswith('ftp'):
+				uris.append(url)
+			else:
+				self.showMessage(url+'\n is not a valid url')
+		
+		params = {'dir':dir,\
+				'max-download-limit':speed,\
+				'--max-concurrent-downloads':pieces,\
+				'--max-connection-per-server':maxconnectionperserver}
+		if not len(uris)==0:
+			try:
+				self.aria.addUris(uris,params)
+				self.close()
+			except:
+				self.showMessage('Unexpected error:\n'+ str(sys.exc_info()[1]))
+		else:
+			self.showMessage('Please add at least one valid url to the list!')
 			
 	@Slot()
 	def on_btnCancel_clicked(self):
@@ -61,3 +81,17 @@ class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 	@Slot()
 	def on_btnRemove_clicked(self):
 		self.listUrls.takeItem(self.listUrls.currentRow())
+		
+	@Slot()
+	def on_btnLoadFile_clicked(self):
+		dialog = QtGui.QFileDialog(self)
+		fileName,_ = dialog.getOpenFileName(self,"Select a file",HOME_DIR)
+		f = open(fileName,'r')
+		for line in f.readlines():
+			self.listUrls.addItem(line.strip())
+			
+	def showMessage(self,msg):
+		msgBox = QtGui.QMessageBox()
+		msgBox.setText(msg)
+		msgBox.exec_()
+		

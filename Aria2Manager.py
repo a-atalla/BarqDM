@@ -37,9 +37,9 @@ class Aria2Manager:
 			print 'Aria2  is Running with PID = ',self._PID
 			
 	def get_PID(self):
-		'''
-		return the system PID for 'aria2c'  process
-		'''
+		###
+		# return the system PID for 'aria2c'  process
+		###
 		proc_list = psutil.get_process_list()
 		for proc in proc_list:
 			if proc.name == 'aria2c':
@@ -71,7 +71,7 @@ class Aria2Manager:
 	def stopAria2(self):
 		if self.isRunning():
 			print 'Aria2 will shutdown ===> ',self._PID
-			self.connection.aria2.forceShutdown()
+			#self.connection.aria2.forceShutdown()
 			os.system("killall aria2c")
 			
 			#proc = psutil.Process(self._PID)    Those 2 lines are a cleaner way to kill aria2c orocess
@@ -148,15 +148,14 @@ class Aria2Manager:
 	def getDownloadStatus(self,gid):
 		data = self.connection.aria2.tellStatus(gid)
 		gid = data.get('gid')
-		filename =os.path.split(data.get('files')[0].get('path'))[1]
+		filename = os.path.split(data.get('files')[0].get('path'))[1]
 		status = data.get('status')
-		size=data.get('totalLength')          #Total File Size
-		dsize = data.get('completedLength')   #The Completed Size
+		size = data.get('totalLength')          # Total File Size
+		dsize = data.get('completedLength')   # The Completed Size
 		speed = data.get('downloadSpeed')
-		return [gid,filename,status,size,dsize,speed]
+		return [gid, filename, status, size, dsize, speed]
 	  
 	def getUrisDetails(self,gid):
 		status  = self.connection.aria2.tellStatus(gid)
 		p.pprint (status)
 		return status.get('files')[0].get('uris')
-	  
