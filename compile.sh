@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 #
-# This file to compile the (ui,qrc,...) into python modules
+# This file to compile the (ui,qrc,...) into python modules, and clean pyc files
 
 pyside-uic  gui/MainWindow.ui -o gui/Ui_MainWindow.py
 pyside-uic  gui/NewDownloadDialog.ui -o gui/Ui_NewDownloadDialog.py

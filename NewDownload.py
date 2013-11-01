@@ -34,6 +34,7 @@ class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 		QtGui.QDialog.__init__(self)
 		self.setupUi(self)
 		self.aria = Aria2Manager()
+		self.edtDir.setText(HOME_DIR+'/Downloads')
 		
 	@Slot()
 	def on_btnDir_clicked(self):

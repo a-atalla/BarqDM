@@ -19,11 +19,33 @@
 # 
 #
 from sys import argv,exit
+import  setproctitle
+import psutil
 from PySide.QtGui import QApplication
 from MainWindow import MainWindow
+from NewDownload import NewDownload
+
+def isRunning():
+	proc_list = psutil.get_process_list()
+	for proc in proc_list:
+		if proc.name == 'barq':
+			return True
+	return False
 
 app = QApplication(argv)
-win = MainWindow()
-win.show()
+
+if isRunning():
+	print 'Barq Download Manager is already running'
+	if not len(argv)==2:
+		exit()
+else:
+	setproctitle.setproctitle('barq')
+	win = MainWindow()
+	win.show()
+	
+if len(argv) == 2:
+	newDownload = NewDownload()
+	newDownload.show()
+	newDownload.edtUrl.setText(argv[1])
 
 exit(app.exec_())
