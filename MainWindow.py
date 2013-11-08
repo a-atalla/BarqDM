@@ -24,6 +24,7 @@ from NewDownload import NewDownload
 from LimitDialog import LimitDialog
 from Aria2Manager import Aria2Manager
 import pprint as p
+import subprocess
 
 class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	def __init__(self):
@@ -41,7 +42,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		else:
 			self.setWindowTitle('Barq Download Manager (Offline)')
 		
-		self.trayIcon()	
+		self.trayIcon()
+		
 		##Setting the columns sizes
 		self.tblActive.setColumnWidth(0,150)
 		self.tblActive.setColumnWidth(1,300)
@@ -58,6 +60,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.menuRC.addAction(self.actionPause)
 		self.menuRC.addAction(self.actionStart)
 		self.menuRC.addAction(self.actionRemoveDownload)
+		self.menuRC.addSeparator()
+		self.menuRC.addAction(self.actionOpenFolder)
+		self.menuRC.addSeparator()
 		self.menuRC.addAction(self.actionDownloadLimit)
 		self.tblActive.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
 		self.connect(self.tblActive, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.showMenuRC)   
@@ -116,6 +121,11 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	def on_actionCleanList_triggered(self):
 		self.aria.cleanDownloadList()
 	
+	@Slot()
+	def on_actionOpenFolder_triggered(self):
+		folder =  self.aria.getDownloadDetail(self.selectedGid(),'dir')
+		subprocess.call(['xdg-open',folder])
+		
 	@Slot()
 	def on_tblActive_itemSelectionChanged(self):
 		self.tblUris.clearContents()

@@ -94,6 +94,7 @@ class Aria2Manager:
 		stopped = self.connection.aria2.tellStopped(0,100,['gid'])
 		allGids = [active,waiting,stopped]  # This is a list of 3 lists
 		return allGids
+	
 	def getOptions(self,gid):
 		return self.connection.aria2.getOption(gid)
 		
@@ -154,7 +155,12 @@ class Aria2Manager:
 		dsize = data.get('completedLength')   # The Completed Size
 		speed = data.get('downloadSpeed')
 		return [gid, filename, status, size, dsize, speed]
-	  
+	 
+	def getDownloadDetail(self,gid,detail):
+		status = self.connection.aria2.tellStatus(gid)
+		detail_value = status.get(detail)
+		return detail_value
+		
 	def getUrisDetails(self,gid):
 		status  = self.connection.aria2.tellStatus(gid)
 		p.pprint (status)

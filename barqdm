@@ -1,0 +1,5 @@
+#!/usr/bin/env python2.7
+import os
+
+os.chdir('/opt/barq')
+os.system('python2 barq.py')

@@ -542,6 +542,15 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;remove all downloads with status (complete , error , removed)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
+  <action name="actionOpenFolder">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/icons/folder-blue.png</normaloff>:/images/icons/folder-blue.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Folder</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="images.qrc"/>
