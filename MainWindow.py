@@ -60,6 +60,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		self.menuRC.addAction(self.actionPause)
 		self.menuRC.addAction(self.actionStart)
 		self.menuRC.addAction(self.actionRemoveDownload)
+		self.menuRC.addAction(self.actionResumeError)
 		self.menuRC.addSeparator()
 		self.menuRC.addAction(self.actionOpenFolder)
 		self.menuRC.addSeparator()
@@ -125,6 +126,14 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 	def on_actionOpenFolder_triggered(self):
 		folder =  self.aria.getDownloadDetail(self.selectedGid(),'dir')
 		subprocess.call(['xdg-open',folder])
+		
+	@Slot()
+	def on_actionResumeError_triggered(self):
+		uri= self.aria.getDownloadDetail(self.selectedGid(),'files')[0].get('uris')[0].get('uri')
+		dir =  self.aria.getDownloadDetail(self.selectedGid(),'dir')
+		params = {'dir':dir}
+		self.aria.addUris([uri],params)
+		
 		
 	@Slot()
 	def on_tblActive_itemSelectionChanged(self):
@@ -269,4 +278,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 		'''
 		Show menu when right-click a download
 		'''
+		selectedRow =  self.tblActive.selectionModel().currentIndex().row()
+		if self.tblActive.item(selectedRow,2).text()=='error':
+			self.actionResumeError.setEnabled(True)
+
 		self.menuRC.exec_(QtGui.QCursor.pos()) 

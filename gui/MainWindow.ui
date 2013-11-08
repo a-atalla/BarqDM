@@ -551,6 +551,18 @@
     <string>Open Folder</string>
    </property>
   </action>
+  <action name="actionResumeError">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/icons/system-reboot.png</normaloff>:/images/icons/system-reboot.png</iconset>
+   </property>
+   <property name="text">
+    <string>Resume Error</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="images.qrc"/>

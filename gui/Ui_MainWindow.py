@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/MainWindow.ui'
 #
-# Created: Fri Nov  8 10:06:32 2013
+# Created: Fri Nov  8 10:42:45 2013
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -212,6 +212,12 @@ class Ui_MainWindow(object):
         icon12.addPixmap(QtGui.QPixmap(":/images/icons/folder-blue.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionOpenFolder.setIcon(icon12)
         self.actionOpenFolder.setObjectName("actionOpenFolder")
+        self.actionResumeError = QtGui.QAction(MainWindow)
+        self.actionResumeError.setEnabled(False)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap(":/images/icons/system-reboot.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionResumeError.setIcon(icon13)
+        self.actionResumeError.setObjectName("actionResumeError")
         self.menuFile.addAction(self.actionNewDownload)
         self.menuFile.addAction(self.actionRemoveDownload)
         self.menuFile.addAction(self.actionQuit)
@@ -299,5 +305,6 @@ class Ui_MainWindow(object):
         self.actionCleanList.setText(QtGui.QApplication.translate("MainWindow", "Clean List", None, QtGui.QApplication.UnicodeUTF8))
         self.actionCleanList.setToolTip(QtGui.QApplication.translate("MainWindow", "<html><head/><body><p>remove all downloads with status (complete , error , removed)</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpenFolder.setText(QtGui.QApplication.translate("MainWindow", "Open Folder", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionResumeError.setText(QtGui.QApplication.translate("MainWindow", "Resume Error", None, QtGui.QApplication.UnicodeUTF8))
 
 import images_rc
