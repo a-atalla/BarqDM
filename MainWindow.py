@@ -159,7 +159,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 			self.close()
 		
 	def trayIcon(self):
-		self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq.png'))
+		self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq-tray-icon.png'))
 		self.trayicon.show()
 		self.menu=QtGui.QMenu()
 		self.menu.addAction(self.actionPauseAll)

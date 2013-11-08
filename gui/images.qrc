@@ -1,6 +1,7 @@
 <RCC>
   <qresource>
     <file>images/icons/system-reboot.png</file>
+    <file>images/icons/barq-tray-icon.png</file>
     <file>images/icons/folder-blue.png</file>
     <file>images/icons/document-edit-sign.png</file>
     <file>images/icons/edit-clear.png</file>
