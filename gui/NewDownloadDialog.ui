@@ -109,6 +109,16 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>File Name (optional):</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="edtFileName"/>
+       </item>
+       <item>
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Download Directory</string>

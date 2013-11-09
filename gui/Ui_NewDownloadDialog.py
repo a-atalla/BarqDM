@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/NewDownloadDialog.ui'
 #
-# Created: Fri Nov  8 17:47:22 2013
+# Created: Sat Nov  9 11:04:19 2013
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -61,6 +61,12 @@ class Ui_NewDownloadDialog(object):
         self.groupBox_2.setObjectName("groupBox_2")
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox_2)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.label_2 = QtGui.QLabel(self.groupBox_2)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_3.addWidget(self.label_2)
+        self.edtFileName = QtGui.QLineEdit(self.groupBox_2)
+        self.edtFileName.setObjectName("edtFileName")
+        self.verticalLayout_3.addWidget(self.edtFileName)
         self.label = QtGui.QLabel(self.groupBox_2)
         self.label.setObjectName("label")
         self.verticalLayout_3.addWidget(self.label)
@@ -146,6 +152,7 @@ class Ui_NewDownloadDialog(object):
         self.btnLoadFile.setToolTip(QtGui.QApplication.translate("NewDownloadDialog", "Load URLs from text file", None, QtGui.QApplication.UnicodeUTF8))
         self.btnLoadFile.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("NewDownloadDialog", "Download Options", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("NewDownloadDialog", "File Name (optional):", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("NewDownloadDialog", "Download Directory", None, QtGui.QApplication.UnicodeUTF8))
         self.btnDir.setText(QtGui.QApplication.translate("NewDownloadDialog", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("NewDownloadDialog", "Maximum Download Speed (kb/s)", None, QtGui.QApplication.UnicodeUTF8))

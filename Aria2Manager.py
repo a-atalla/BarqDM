@@ -63,6 +63,7 @@ class Aria2Manager:
 				os.mkdir(CONFIG_DIR)
 		args.append('--save-session='+CONFIG_DIR+'/session.ini')
 		args.append('--save-session-interval=30')
+		args.append('--always-resume=true')
 		print (args)
 		subprocess.call(args)
 		self._PID = self.get_PID()

@@ -47,7 +47,8 @@ class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 		speed= str(self.spinSpeed.value())+'K'
 		pieces = str(self.spinPieces.value())
 		maxconnectionperserver = str(self.spinConnectionsPerServer.value())
-		dir = str(self.edtDir.text())
+		dir = self.edtDir.text()
+		oFileName = self.edtFileName.text()
 		
 		uris = []
 		for i in range(0,self.listUrls.count()):
@@ -56,11 +57,12 @@ class NewDownload(QtGui.QDialog,Ui_NewDownloadDialog):
 				uris.append(url)
 			else:
 				self.showMessage(url+'\n is not a valid url')
-		
+		print dir+'/'+oFileName
 		params = {'dir':dir,\
 				'max-download-limit':speed,\
-				'--max-concurrent-downloads':pieces,\
-				'--max-connection-per-server':maxconnectionperserver}
+				'max-concurrent-downloads':pieces,\
+				'max-connection-per-server':maxconnectionperserver,\
+				'out':oFileName}
 		if not len(uris)==0:
 			try:
 				self.aria.addUris(uris,params)

@@ -21,7 +21,8 @@
 from sys import argv,exit
 import  setproctitle
 import psutil
-from PySide.QtGui import QApplication
+from PySide.QtGui import QApplication,QMessageBox
+#from PySide.QtCore import QString
 from MainWindow import MainWindow
 from NewDownload import NewDownload
 
@@ -36,16 +37,17 @@ app = QApplication(argv)
 
 if isRunning():
 	print 'Barq Download Manager is already running'
-	if not len(argv)==2:
+	if  len(argv) == 1:
 		exit()
 else:
 	setproctitle.setproctitle('barq')
 	win = MainWindow()
 	win.show()
 	
-if len(argv) == 2:
-	newDownload = NewDownload()
-	newDownload.show()
-	newDownload.edtUrl.setText(argv[1])
+if len(argv) > 2:
+	new = NewDownload()
+	new.show()
+	new.edtFileName.setText(argv[1].decode('utf-8'))
+	new.listUrls.addItem(argv[2])
 
 exit(app.exec_())
