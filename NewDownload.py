@@ -17,7 +17,6 @@
 # along with this program.  If not,  see <http://www.gnu.org/licenses/>.
 #
 #
-#TODO: Monitor Clipboard. Target V-0.5
 #TODO: Select between video formats. Target V-0.6
 #TODO: Patched download. Target V-0.6
 

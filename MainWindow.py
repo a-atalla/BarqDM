@@ -22,18 +22,23 @@
 #TODO: Change Download Options. Target V-0.6
 #
 
-from PySide.QtCore import Slot
+from PySide.QtCore import Signal, Slot
 from PySide import QtGui, QtCore
 from gui.Ui_MainWindow import Ui_MainWindow
 from NewDownload import NewDownload
 from LimitDialog import LimitDialog
 from Aria2Manager import Aria2Manager
-#import pprint as p
 import subprocess
 import os
 
 
 class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
+
+    #Custom Signals
+    downloadCompleted = Signal(int)
+    downloadFailed = Signal(int)
+
+
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
         self.setupUi(self)
@@ -75,6 +80,21 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
         self.menuRC.addAction(self.actionDownloadLimit)
         self.tblActive.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.connect(self.tblActive,  QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'),  self.showMenuRC)
+
+        self.downloadCompleted.connect(self.onCompleted)
+        self.downloadFailed.connect(self.onFailed)
+
+    #@Slot()
+    def onFailed(self, i):
+        icon = QtGui.QSystemTrayIcon.MessageIcon(3)
+        fileName = self.tblActive.item(i, 1).text()
+        self.trayicon.showMessage(self.tr('Download Failed'), fileName, icon)
+
+    #@Slot()
+    def onCompleted(self, i):
+        icon = QtGui.QSystemTrayIcon.MessageIcon(1)
+        fileName = self.tblActive.item(i, 1).text()
+        self.trayicon.showMessage(self.tr('Download Completed'), fileName, icon)
 
     @Slot()
     def on_actionNewDownload_triggered(self):
@@ -148,9 +168,9 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
 
     @Slot()
     def on_actionResumeError_triggered(self):
-        uri= self.aria.getDownloadDetail(self.selectedGid(), 'files')[0].get('uris')[0].get('uri')
-        dir =  self.aria.getDownloadDetail(self.selectedGid(), 'dir')
-        params = {'dir':dir}
+        uri = self.aria.getDownloadDetail(self.selectedGid(), 'files')[0].get('uris')[0].get('uri')
+        folder = self.aria.getDownloadDetail(self.selectedGid(), 'dir')
+        params = {'dir': folder}
         self.aria.addUris([uri], params)
 
 
@@ -181,9 +201,9 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
             self.close()
 
     def trayIcon(self):
-        self.trayicon=QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq-tray-icon.png'))
+        self.trayicon = QtGui.QSystemTrayIcon(QtGui.QIcon(':images/icons/barq-tray-icon.png'))
         self.trayicon.show()
-        self.menu=QtGui.QMenu()
+        self.menu = QtGui.QMenu()
         self.menu.addAction(self.actionPauseAll)
         self.menu.addAction(self.actionStartAll)
         self.menu.addAction(self.actionQuit)
@@ -191,7 +211,7 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
         self.trayicon.activated.connect(self.onTrayIconActivated)
 
     def onTrayIconActivated(self,  reason):
-        if reason  ==  QtGui.QSystemTrayIcon.DoubleClick:
+        if reason == QtGui.QSystemTrayIcon.DoubleClick:
             if self.isVisible():
                 self.hide()
             else:
@@ -213,44 +233,52 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
 
 
     def viewActive(self):
-        activeList  = self.aria.getAllGids()[0]
+        activeList = self.aria.getAllGids()[0]
         waitingList = self.aria.getAllGids()[1]
         stoppedList = self.aria.getAllGids()[2]
         allList = activeList+waitingList+stoppedList
+
         if self.tblActive.rowCount() > len(allList):
             self.tblActive.clearContents()
             self.tblActive.setRowCount(self.tblActive.rowCount()-1)
         for active in allList:
-            i=allList.index(active)
+            i = allList.index(active)
             gid = active.get('gid')
-            size= str(round(float(self.aria.getDownloadDetail(gid, 'totalLength'))/1000000, 2))+' MB'
-            speed  = str(round(float(self.aria.getDownloadDetail(gid, 'downloadSpeed'))/1000, 2))+' Kb/sec'
+
+            try:
+                old_status = self.tblActive.item(i, 2).text()
+            except Exception as e:
+                if e.message == "'NoneType' object has no attribute 'text'":
+                    old_status = ''
+
+            size = str(round(float(self.aria.getDownloadDetail(gid, 'totalLength'))/1000000, 2))+' MB'
+            speed = str(round(float(self.aria.getDownloadDetail(gid, 'downloadSpeed'))/1000, 2))+' Kb/sec'
             try:
                 progress = round(float(self.aria.getDownloadDetail(gid, 'completedLength'))*100/float(self.aria.getDownloadDetail(gid, 'totalLength')), 2)
             except:
-                progress =0
+                progress = 0
 
             try: # To avoid dividing by zero until connect to the server
                 RemainingTime = (float(self.aria.getDownloadDetail(gid, 'totalLength'))-float(self.aria.getDownloadDetail(gid, 'completedLength')))/float(self.aria.getDownloadDetail(gid, 'downloadSpeed'))
-                remainingTime = round (RemainingTime/(3600), 2) #Hour Format
+                remainingTime = round(RemainingTime/3600, 2)  # Hour Format
                 timeFormat = '  H'
-                if remainingTime < 1 :
-                    remainingTime = round (RemainingTime/(60), 2) #Min Format
+                if remainingTime < 1:
+                    remainingTime = round(RemainingTime/60, 2)  # Min Format
                     timeFormat = '  M'
-                    if remainingTime < 1 :
-                        remainingTime = round (RemainingTime, 2) #Sec Format
+                    if remainingTime < 1:
+                        remainingTime = round(RemainingTime, 2)  # Sec Format
                         timeFormat = '  S'
             except:
                 remainingTime = ''
-                timeFormat=''
+                timeFormat = ''
 
             if self.tblActive.rowCount() < len(allList):
                 self.tblActive.setRowCount(self.tblActive.rowCount()+1)
 
 
             pbar = QtGui.QProgressBar()
-            pbar.setRange(0, 100) # The range is from 0  to Size
-            pbar.setValue(progress)			#The value is the dsize which is completedLength
+            pbar.setRange(0, 100)  # The range is from 0  to Size
+            pbar.setValue(progress)			# The value is the dsize which is completedLength
             files = self.aria.getDownloadDetail(gid, 'files')
             self.tblActive.setItem(i, 0, QtGui.QTableWidgetItem(gid))
             self.tblActive.setItem(i, 1, QtGui.QTableWidgetItem(os.path.split(files[0].get('path'))[1]))
@@ -261,16 +289,28 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
             self.tblActive.setItem(i, 6, QtGui.QTableWidgetItem(str(remainingTime)+timeFormat))
             self.tblActive.setRowHeight(i, 20)
 
-            s=self.aria.getDownloadDetail(gid, 'status')
+            s = self.aria.getDownloadDetail(gid, 'status')
             for j in range(0, 7):
                 if not j == 4:
                     if j == 2 or j == 3 or j == 5 or j == 6:
                         self.tblActive.item(i, j).setTextAlignment(QtCore.Qt.AlignCenter)
-
                     if s == 'error' or s == 'removed' :
                         self.tblActive.item(i, j).setBackground(QtCore.Qt.red)
                     elif s == 'complete':
                         self.tblActive.item(i, j).setBackground(QtCore.Qt.green)
+
+            # Emit signals on download error or complete
+            try:
+                new_status = self.tblActive.item(i, 2).text()
+            except Exception as e:
+                if e.message == "'NoneType' object has no attribute 'text'":
+                    new_status = ''
+            if not new_status == old_status:
+                if new_status == 'complete':
+                    self.downloadCompleted.emit(i)
+                elif new_status == 'error':
+                    self.downloadFailed.emit(i)
+
 
     def selectedGid(self):
         selectedRow =  self.tblActive.selectionModel().currentIndex().row()
@@ -279,8 +319,10 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
             return gid
 
     def viewUris(self):
-        self.btmTab.setTabText(0, self.tblActive.item(self.tblActive.currentRow(), 1).text())
-
+        try:
+            self.btmTab.setTabText(0, self.tblActive.item(self.tblActive.currentRow(), 1).text())
+        except:
+            pass
         uris = self.aria.getUrisDetails(self.selectedGid())
         if self.tblUris.rowCount()<len(uris):
             self.tblUris.setRowCount(len(uris))
