@@ -22,27 +22,27 @@ from PySide.QtCore import Slot
 from gui.Ui_LimitDialog import Ui_LimitDialog
 
 class LimitDialog(QtGui.QDialog,Ui_LimitDialog):
-	def __init__(self,gid):
-		QtGui.QDialog.__init__(self)
-		self.setupUi(self)
-		self.gid = gid
-		self.aria = Aria2Manager()
+    def __init__(self,gid):
+        QtGui.QDialog.__init__(self)
+        self.setupUi(self)
+        self.gid = gid
+        self.aria = Aria2Manager()
 
-		self.slidLimit.setValue( int(self.aria.getOptions(self.gid).get('max-download-limit'))/1000)
+        self.slidLimit.setValue( int(self.aria.getOptions(self.gid).get('max-download-limit'))/1000)
 
-	@Slot()
-	def on_btnCancel_clicked(self):
-		self.close()
-	@Slot()
-	def on_btnOk_clicked(self):
-		speed = str(self.spinLimit.value())+'K'
-		self.aria.changeOption(self.gid,{'max-download-limit':speed})
-		self.close()
-		
-	@Slot()
-	def on_slidLimit_valueChanged(self):
-		self.spinLimit.setValue(self.slidLimit.value())
-		
-	@Slot()
-	def on_spinLimit_valueChanged(self):
-		self.slidLimit.setValue(self.spinLimit.value())
+    @Slot()
+    def on_btnCancel_clicked(self):
+        self.close()
+    @Slot()
+    def on_btnOk_clicked(self):
+        speed = str(self.spinLimit.value())+'K'
+        self.aria.changeOption(self.gid,{'max-download-limit':speed})
+        self.close()
+
+    @Slot()
+    def on_slidLimit_valueChanged(self):
+        self.spinLimit.setValue(self.slidLimit.value())
+
+    @Slot()
+    def on_spinLimit_valueChanged(self):
+        self.slidLimit.setValue(self.spinLimit.value())

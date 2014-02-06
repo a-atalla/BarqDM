@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
 # <A PySide Gui for Aria2 Download Manager>
-# Copyright (C) 2013  a.atalla <a.atalla@hacari.org>
+# Copyright (C) 2013  a.atalla <a.atalla [at] hacari [dot] org>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,33 +21,36 @@
 from sys import argv,exit
 import  setproctitle
 import psutil
+import logging
 from PySide.QtGui import QApplication,QMessageBox
-#from PySide.QtCore import QString
 from MainWindow import MainWindow
 from NewDownload import NewDownload
 
+logging.debug('Hello Logeer')
 def isRunning():
-	proc_list = psutil.get_process_list()
-	for proc in proc_list:
-		if proc.name == 'barq':
-			return True
-	return False
+    proc_list = psutil.get_process_list()
+    for proc in proc_list:
+        if proc.name == 'barq':
+            print '**************', proc.name
+
+            return True
+    return False
 
 app = QApplication(argv)
 
 if isRunning():
-	print 'Barq Download Manager is already running'
-	if  len(argv) == 1:
-		exit()
+    print 'Barq Download Manager is already running'
+    if  len(argv) == 1:
+        exit()
 else:
-	setproctitle.setproctitle('barq')
-	win = MainWindow()
-	win.show()
-	
+    setproctitle.setproctitle('barq')
+    win = MainWindow()
+    win.show()
+
 if len(argv) > 2:
-	new = NewDownload()
-	new.show()
-	new.edtFileName.setText(argv[1].decode('utf-8'))
-	new.listUrls.addItem(argv[2])
+    new = NewDownload()
+    new.show()
+    new.edtFileName.setText(argv[1].decode('utf-8'))
+    new.listUrls.addItem(argv[2])
 
 exit(app.exec_())

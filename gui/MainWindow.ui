@@ -67,6 +67,9 @@
         <property name="dragDropOverwriteMode">
          <bool>false</bool>
         </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectRows</enum>
         </property>
@@ -74,10 +77,10 @@
          <enum>Qt::ElideMiddle</enum>
         </property>
         <property name="showGrid">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="gridStyle">
-         <enum>Qt::NoPen</enum>
+         <enum>Qt::DotLine</enum>
         </property>
         <property name="columnCount">
          <number>7</number>
@@ -327,7 +330,7 @@
      <x>0</x>
      <y>0</y>
      <width>818</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -360,7 +363,7 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout_aria2"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDownload"/>
@@ -516,7 +519,11 @@
     <string>About aria2</string>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="actionAboutQt">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/icons/qt-logo.png</normaloff>:/images/icons/qt-logo.png</iconset>
+   </property>
    <property name="text">
     <string>About Qt</string>
    </property>
@@ -561,6 +568,15 @@
    </property>
    <property name="text">
     <string>Resume Error</string>
+   </property>
+  </action>
+  <action name="actionOpenFile">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/icons/quickopen-file.png</normaloff>:/images/icons/quickopen-file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open File</string>
    </property>
   </action>
  </widget>

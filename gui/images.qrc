@@ -1,5 +1,7 @@
 <RCC>
   <qresource>
+    <file>images/icons/quickopen-file.png</file>
+    <file>images/icons/qt-logo.png</file>
     <file>images/icons/system-reboot.png</file>
     <file>images/icons/barq-tray-icon.png</file>
     <file>images/icons/folder-blue.png</file>

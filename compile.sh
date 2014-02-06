@@ -27,5 +27,4 @@ pyside-rcc  gui/images.qrc -o gui/images_rc.py
 
 
 #clean pyc
-rm -rf *.pyc
-rm -rf gui/*.pyc
+find . -name "*.pyc" -exec rm -rf {} \;

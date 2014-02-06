@@ -1,5 +1,5 @@
 *.pyc
-*.kdev4
 build
 gui/screenshots
 barqdm
+.*
