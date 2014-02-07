@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/MainWindow.ui'
 #
-# Created: Thu Feb  6 08:39:10 2014
+# Created: Fri Feb  7 11:50:50 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -227,6 +227,11 @@ class Ui_MainWindow(object):
         icon15.addPixmap(QtGui.QPixmap(":/images/icons/quickopen-file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionOpenFile.setIcon(icon15)
         self.actionOpenFile.setObjectName("actionOpenFile")
+        self.actionDownloadInformation = QtGui.QAction(MainWindow)
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap(":/images/icons/help-about.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionDownloadInformation.setIcon(icon16)
+        self.actionDownloadInformation.setObjectName("actionDownloadInformation")
         self.menuFile.addAction(self.actionNewDownload)
         self.menuFile.addAction(self.actionRemoveDownload)
         self.menuFile.addAction(self.actionQuit)
@@ -316,5 +321,6 @@ class Ui_MainWindow(object):
         self.actionOpenFolder.setText(QtGui.QApplication.translate("MainWindow", "Open Folder", None, QtGui.QApplication.UnicodeUTF8))
         self.actionResumeError.setText(QtGui.QApplication.translate("MainWindow", "Resume Error", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpenFile.setText(QtGui.QApplication.translate("MainWindow", "Open File", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionDownloadInformation.setText(QtGui.QApplication.translate("MainWindow", "Download Information", None, QtGui.QApplication.UnicodeUTF8))
 
 import images_rc

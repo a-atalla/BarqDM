@@ -171,7 +171,7 @@
             <number>9999</number>
            </property>
            <property name="value">
-            <number>10</number>
+            <number>999</number>
            </property>
           </widget>
          </item>
@@ -202,7 +202,7 @@
          <item>
           <widget class="QSpinBox" name="spinPieces">
            <property name="value">
-            <number>5</number>
+            <number>1</number>
            </property>
           </widget>
          </item>

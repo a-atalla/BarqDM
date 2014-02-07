@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/NewDownloadDialog.ui'
 #
-# Created: Thu Feb  6 08:39:10 2014
+# Created: Fri Feb  7 11:50:50 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -91,7 +91,7 @@ class Ui_NewDownloadDialog(object):
         self.horizontalLayout.addItem(spacerItem1)
         self.spinSpeed = QtGui.QSpinBox(self.groupBox_2)
         self.spinSpeed.setMaximum(9999)
-        self.spinSpeed.setProperty("value", 10)
+        self.spinSpeed.setProperty("value", 999)
         self.spinSpeed.setObjectName("spinSpeed")
         self.horizontalLayout.addWidget(self.spinSpeed)
         self.verticalLayout_3.addLayout(self.horizontalLayout)
@@ -103,7 +103,7 @@ class Ui_NewDownloadDialog(object):
         spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem2)
         self.spinPieces = QtGui.QSpinBox(self.groupBox_2)
-        self.spinPieces.setProperty("value", 5)
+        self.spinPieces.setProperty("value", 1)
         self.spinPieces.setObjectName("spinPieces")
         self.horizontalLayout_3.addWidget(self.spinPieces)
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)

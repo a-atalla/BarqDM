@@ -26,13 +26,10 @@ from PySide.QtGui import QApplication,QMessageBox
 from MainWindow import MainWindow
 from NewDownload import NewDownload
 
-logging.debug('Hello Logeer')
 def isRunning():
     proc_list = psutil.get_process_list()
     for proc in proc_list:
         if proc.name == 'barq':
-            print '**************', proc.name
-
             return True
     return False
 

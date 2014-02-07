@@ -16,9 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not,  see <http://www.gnu.org/licenses/>.
 # 
-#TODO: Notify on (Complete,Error).  Target V-0.5
-#TODO:Show all download options. Target V-0.5
-#TODO:Start with system startup. Target V-0.5
+#TODO: Start with system startup. Target V-0.5
 #TODO: Change Download Options. Target V-0.6
 #
 
@@ -27,6 +25,7 @@ from PySide import QtGui, QtCore
 from gui.Ui_MainWindow import Ui_MainWindow
 from NewDownload import NewDownload
 from LimitDialog import LimitDialog
+from InfoDialog import InfoDialog
 from Aria2Manager import Aria2Manager
 import subprocess
 import os
@@ -78,6 +77,8 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
         self.menuRC.addAction(self.actionResumeError)
         self.menuRC.addSeparator()
         self.menuRC.addAction(self.actionDownloadLimit)
+        self.menuRC.addSeparator()
+        self.menuRC.addAction(self.actionDownloadInformation)
         self.tblActive.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.connect(self.tblActive,  QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'),  self.showMenuRC)
 
@@ -95,6 +96,12 @@ class MainWindow(QtGui.QMainWindow,  Ui_MainWindow):
         icon = QtGui.QSystemTrayIcon.MessageIcon(1)
         fileName = self.tblActive.item(i, 1).text()
         self.trayicon.showMessage(self.tr('Download Completed'), fileName, icon)
+
+    @Slot()
+    def on_actionDownloadInformation_triggered(self):
+        infodlg = InfoDialog(self.selectedGid())
+        infodlg.exec_()
+        #print self.aria.getOptions(self.selectedGid())  # TODO: Show info in a dialog
 
     @Slot()
     def on_actionNewDownload_triggered(self):

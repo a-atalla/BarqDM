@@ -22,6 +22,7 @@
 pyside-uic  gui/MainWindow.ui -o gui/Ui_MainWindow.py
 pyside-uic  gui/NewDownloadDialog.ui -o gui/Ui_NewDownloadDialog.py
 pyside-uic  gui/LimitDialog.ui  -o  gui/Ui_LimitDialog.py
+pyside-uic  gui/InfoDialog.ui  -o  gui/Ui_InfoDialog.py
 
 pyside-rcc  gui/images.qrc -o gui/images_rc.py 
 

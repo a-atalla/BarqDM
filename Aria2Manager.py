@@ -19,10 +19,8 @@
 
 import os
 import psutil
-#import signal
 import subprocess
 import xmlrpclib as rpc
-#import pprint as p
 
 HOME_DIR = os.environ['HOME']
 CONFIG_DIR= HOME_DIR+'/.barq'   # You can change the dir name as you want 
